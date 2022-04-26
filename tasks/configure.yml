@@ -1,0 +1,16 @@
+- name: Allow access from other IPs
+  firewalld:
+    permanent: true
+    immediate: true
+    state: enabled
+    rich_rule: 'rule family="ipv4" source address="{{ item }}/32" port port="{{ bind_port }}" protocol="tcp" accept'
+  ignore_errors: True
+  when: ansible_os_family == "RedHat"
+  with_items:
+    - "{{ other_ips }}"
+
+- name: Set configuration file
+  template:
+    src: "sync.yaml.j2"
+    dest: "{{ config_location }}"
+    mode: 0644

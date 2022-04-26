@@ -1,0 +1,4 @@
+destination: "/opt/simplefilesync"
+config_location: "/opt/simplefilesync/sync.yaml"
+bind_port: 54321
+statefile: "/tmp/simplefilesync.state"

@@ -1,0 +1,12 @@
+[Unit]
+Description=Simple file sync program
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory={{ destination }}
+ExecStart=python3 {{ destination }}/main.py -c {{ config_location }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

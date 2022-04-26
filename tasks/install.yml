@@ -1,0 +1,16 @@
+---
+- name: Clone SimpleFileSync
+  git:
+    repo: "https://github.com/diademiemi/SimpleFileSync.git"
+    dest: "{{ destination }}"
+    update: yes
+
+- name: Install pip requirements.txt
+  pip:
+    requirements: "{{ destination }}/requirements.txt"
+
+- name: Install systemd unit file
+  template:
+    src: "simplefilesync.service.j2"
+    dest: "/etc/systemd/system/simplefilesync.service"
+    mode: 0644

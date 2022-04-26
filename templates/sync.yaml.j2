@@ -1,0 +1,12 @@
+bind_ip: {{ bind_ip }}
+port: {{ bind_port }}
+remote_hosts:
+{% for ip in other_ips %}
+- {{ ip }}
+{% endfor %}
+shared_secret: "{{ secret.ansible_facts.secret }}"
+statefile: "{{ statefile}}"
+synced_files:
+{% for file in synced_files %}
+- {{ file }}
+{% endfor %}

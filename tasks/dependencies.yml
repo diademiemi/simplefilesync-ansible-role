@@ -1,0 +1,10 @@
+---
+- name: Install git
+  package:
+    name: git
+    state: latest
+
+- name: Install python3
+  package:
+    name: python3
+    state: latest

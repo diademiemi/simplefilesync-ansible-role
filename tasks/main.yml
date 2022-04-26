@@ -1,0 +1,40 @@
+---
+- name: Check if required variables are set
+  run_once: True
+  assert:
+    that:
+      - synced_files is defined
+
+- name: Generate random secret
+  set_fact:
+    secret: "{{ lookup('community.general.random_string', length=32, lower=true, upper=true, numbers=true, special=false) }}"
+  delegate_to: localhost
+  run_once: true
+  register: secret
+
+- name: Get bind IP
+  set_fact: 
+    bind_ip: "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }}"
+  when: bind_ip is undefined
+
+- name: Get IPs of other hosts
+  set_fact: 
+    other_ips: |-
+      [
+        {% for host in play_hosts %}
+          {% if hostvars[host].ansible_default_ipv4.address != hostvars[inventory_hostname].ansible_default_ipv4.address %}
+            "{{ hostvars[host].ansible_default_ipv4.address }}",
+          {% endif %}
+        {% endfor %}
+      ]
+  when: other_ips is undefined
+
+- name: Install dependencies
+  tags: simplefilesync-depends
+  import_tasks: dependencies.yml
+
+- name: Install SimpleFileSync
+  import_tasks: install.yml
+
+- name: Configure SimpleFileSync
+  import_tasks: configure.yml
