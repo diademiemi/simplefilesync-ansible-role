@@ -20,6 +20,29 @@ Ansible role to deploy https://github.com/diademiemi/SimpleFileSync on a set of 
 To make a pool syncing the file `/home/vagrant/test.txt` across 3 servers `192.168.50.11`, `192.168.50.12` and `192.168.50.13`.
 Check the collapsed host_vars section for the variables set per host.  
 
+<details><summary> Example Vagrantfile </summary><p>
+
+```ruby
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "generic/centos8"
+  (1..3).each do |i| 
+    config.vm.define "server#{i}" do |host|
+    host.vm.hostname = "server#{i}"
+    host.vm.network "private_network", ip: "192.168.50.1#{i}"
+
+    host.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+      end
+    end
+  end
+end
+
+
+```
+
+</details>
+
 <details><summary> <code> host_vars/ </code> </summary><p>
 
 <details open><summary> <code> server1.yml </code> </summary><p>
