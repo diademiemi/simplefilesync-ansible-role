@@ -62,7 +62,7 @@ other_ips:
 </details>
 
 ```yaml
-- hosts: server1, server2, server3
+- hosts: servers
   become: True
   roles:
     - simplefilesync-ansible-role
