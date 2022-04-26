@@ -14,3 +14,9 @@
     src: "simplefilesync.service.j2"
     dest: "/etc/systemd/system/simplefilesync.service"
     mode: 0644
+
+- name: Enable and start service
+  service:
+    name: simplefilesync
+    state: started
+    enabled: yes
