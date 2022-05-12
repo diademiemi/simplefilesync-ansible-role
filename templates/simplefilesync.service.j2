@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory={{ destination }}
-ExecStart=python3 {{ destination }}/main.py -c {{ config_location }}
+ExecStart=/usr/bin/python3 {{ destination }}/main.py -c {{ config_location }}
 Restart=on-failure
 
 [Install]
